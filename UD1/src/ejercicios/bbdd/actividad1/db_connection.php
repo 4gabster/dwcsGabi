@@ -102,16 +102,16 @@ function loginUsuarios($pdo)
 
             $stmt->execute();
 
-            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            $usuario = $stmt->fetch(PDO::FETCH_OBJ);
 
             if ($usuario) {
-                $passwordHash = $usuario["contrasena_hash"];
+                $passwordHash = $usuario->contrasena_hash;
 
                 if (password_verify($passwordPlana, $passwordHash)) {
                     unset($passwordPlana);
 
                     session_start();
-                    $_SESSION["nic_usuario"] = $usuario["nic_usuario"];
+                    $_SESSION["usuario"] = $usuario;
 
                     header("Location: index.php");
                     exit();
@@ -126,3 +126,21 @@ function loginUsuarios($pdo)
         }
     }
 }
+
+
+                        
+                        
+function datosXogosAll($pdo)
+{
+    $sql = "SELECT * FROM videojuegos";
+
+    try {
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    } catch (\PDOException $e) {
+        echo "ERRO na base de datos: " . $e->getMessage();
+    }
+}
+
+
+// function eliminarXogo($)

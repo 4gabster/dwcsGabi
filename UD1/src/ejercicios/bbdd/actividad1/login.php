@@ -3,7 +3,6 @@ require "db_connection.php";
 
 $pdo = conectarBD();
 loginUsuarios($pdo);
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
